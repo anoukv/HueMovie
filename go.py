@@ -2,9 +2,9 @@ import os
 import urllib2, json
 from time import sleep
 
-
+# convert RGB to XY
 def convertToXY(red, green, blue):
-	# print red, green, blue
+	
 	# Gamma correction
 	if red > 0.04045:
 		red = ((red + 0.055) / (1.0 + 0.055)) ** 2.4
@@ -26,12 +26,9 @@ def convertToXY(red, green, blue):
 	Y = red * 0.234327 + green * 0.743075 + blue * 0.022598
 	Z = green * 0.053077 + blue * 1.035763;
 
-
 	# Calculate the xy values from the XYZ values
 	x = X / (X + Y + Z); 
 	y = Y / (X + Y + Z);
-
-	# Check if the found xy value is within the color gamut of the light, 
 	
 	# Use the Y value of XYZ as brightness The Y value indicates the brightness of the converted color.
 	return x, y, Y
@@ -46,9 +43,12 @@ if __name__ == "__main__":
 	ip = response[0]['internalipaddress']
 	
 	# set the username and the light to be adjusted
+	# TODO generalize for other users
 	username = 'anoukvisser'
+	
+	# set the light and the brightness
 	light = '2'
-	bri = '20'
+	bri = '255'
 
 	# create the url for request
 	urlForRequest = 'http://' + ip + '/api/' + username + '/lights/' + light + '/state' 

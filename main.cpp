@@ -10,13 +10,13 @@ int main(int argc, const char * argv[])
         return -1;
     }
     
+    // read and resize image
     std::string filename = argv[1];
-    // cv::namedWindow("result");
     cv::Mat image = cv::imread(filename);    
     cv::resize(image, image, cv::Size(image.cols / 25, image.rows / 25));
-    // cv::imshow("result", image);
-    // cv::waitKey(0);
 
+
+    // initialize counters
     int avgBlue = 0;
     int avgGreen = 0;
     int avgRed = 0;
@@ -24,17 +24,21 @@ int main(int argc, const char * argv[])
 
     int btemp, gtemp, rtemp;
 
+    // for every pixel in the image
     for(int i = 0; i < image.rows; i++)
     {
         for(int j = 0; j < image.cols; j++)
         {
+            // get the color of the pixels
             cv::Vec3b color = image.at<cv::Vec3b>(i, j);
             btemp = (int) color[0];
             gtemp = (int) color[1];
             rtemp = (int) color[2];
+
+            // if the color is not black
+            // add it to the averages
             if (btemp != 0 && gtemp != 0 && rtemp != 0)
             {
-                // std::cout << (int)color[0] << " " << (int)color[1] << " " << (int)color[2] << "\n";
                 counter++;
                 avgBlue += btemp;
                 avgGreen += gtemp;
@@ -43,24 +47,13 @@ int main(int argc, const char * argv[])
         }
     }
     
+    // acutally average
     float b = (float) avgBlue / counter;
     float g = (float) avgGreen / counter;
     float r = (float) avgRed / counter;
+
+    // write color to out
     std::cout << b << " " <<  g << " " << r << "\n";
-
-    for(int i = 0; i < image.rows; i++)
-    {
-        for(int j = 0; j < image.cols; j++)
-        {
-            image.at<cv::Vec3b>(i, j)[0] = b;
-            image.at<cv::Vec3b>(i, j)[1] = g;
-            image.at<cv::Vec3b>(i, j)[2] = r;
-
-        }
-    }
-
-    // cv::imshow("result", image);
-    // cv::waitKey(0);
 
     return 0;
 }
