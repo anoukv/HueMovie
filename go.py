@@ -47,8 +47,8 @@ if __name__ == "__main__":
 	
 	# set the username and the light to be adjusted
 	username = 'anoukvisser'
-	light = '3'
-	bri = '60'
+	light = '2'
+	bri = '20'
 
 	# create the url for request
 	urlForRequest = 'http://' + ip + '/api/' + username + '/lights/' + light + '/state' 
@@ -73,7 +73,7 @@ if __name__ == "__main__":
 		# if the color is almost black
 		if colors[2] < 0.02 and colors[1] < 0.02 and colors[0] < 0.02:
 			# turn the light off.
-			data = '{"on":false}'
+			data = '{"bri":1}'
 		else:
 			# convert the colors
 			x, y, Y = convertToXY(colors[2], colors[1], colors[0])
