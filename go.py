@@ -1,4 +1,4 @@
-import os
+import os, sys
 import urllib2, json
 from time import sleep
 
@@ -34,6 +34,10 @@ def convertToXY(red, green, blue):
 	return x, y, Y
 
 if __name__ == "__main__":
+	if len(sys.argv) < 2:
+		print "Usage: python go.py <BRIGHTNESS>"
+		sys.exit()
+	bri = sys.argv[1]
 	
 	# get IP address of the bridge
 	opener = urllib2.build_opener(urllib2.HTTPHandler)
@@ -48,7 +52,7 @@ if __name__ == "__main__":
 	
 	# set the light and the brightness
 	light = '2'
-	bri = '255'
+	# bri = '60'
 
 	# create the url for request
 	urlForRequest = 'http://' + ip + '/api/' + username + '/lights/' + light + '/state' 
